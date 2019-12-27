@@ -1,7 +1,16 @@
 package com.bridgelabz.moodAnalyzer;
 
 public class MoodAnalyzer {
-    public String analyse(String message) throws MoodAnalysisException {
+    private String message;
+    public MoodAnalyzer(String message) {
+        this.message=message;
+    }
+
+    public MoodAnalyzer() {
+
+    }
+
+    public String analyse() throws MoodAnalysisException {
         try {
 
             if (message.length()==0){
