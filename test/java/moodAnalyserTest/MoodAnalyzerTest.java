@@ -220,8 +220,7 @@ public class MoodAnalyzerTest {
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer(null);
         try {
             moodAnalyzer.analyse();
-        }
-        catch (MoodAnalysisException e){
+        }catch (MoodAnalysisException e){
            Assert.assertEquals("Please, enter a valid message", e.getMessage());
         }
     }
