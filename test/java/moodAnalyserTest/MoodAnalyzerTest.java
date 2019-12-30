@@ -13,6 +13,22 @@ import java.lang.reflect.Method;
 
 public class MoodAnalyzerTest {
 
+
+    @Test
+    public void whenGivenNullMessage_shouldReturnException() throws IllegalAccessException {
+        try {
+            Method method = MoodAnalyserReflector.getMethod("analyse");
+            String mood = (String) method.invoke(new MoodAnalyzer(null));
+            Assert.assertEquals("Happy", mood);
+        }catch (InvocationTargetException e) {
+            try {
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTERED_NULL, "Please enter the valid message");
+            }catch (MoodAnalysisException ee){
+                ee.printStackTrace();
+            }
+        }
+    }
+
     @Test
     public void whenGivenFieldNameImproper_shouldReturnException() throws ClassNotFoundException {
         try {
