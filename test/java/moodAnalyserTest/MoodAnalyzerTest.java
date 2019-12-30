@@ -13,6 +13,23 @@ import java.lang.reflect.Method;
 
 public class MoodAnalyzerTest {
 
+    @Test
+    public void whenGivenFieldNameImproper_shouldReturnException() throws ClassNotFoundException {
+        try {
+            Class<?> aClass = Class.forName("com.bridgelabz.moodAnalyzer.MoodAnalyzer");
+            Field field = aClass.getField("messages");
+            Assert.assertEquals(field, "messages");
+        } catch (NoSuchFieldException e) {
+            try {
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_FIELD_FOUND, "Please enter valid message");
+
+            }catch (MoodAnalysisException ee){
+                ee.printStackTrace();
+
+            }
+        }
+
+    }
 
     @Test
     public void whenGivenMethodNameImproper_shouldReturnException() throws InvocationTargetException, IllegalAccessException {
