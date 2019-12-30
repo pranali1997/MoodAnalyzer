@@ -1,5 +1,4 @@
 package com.bridgelabz.moodAnalyzer;
-
 import java.util.Objects;
 
 public class MoodAnalyzer {

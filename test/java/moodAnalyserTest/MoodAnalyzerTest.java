@@ -8,8 +8,33 @@ import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class MoodAnalyzerTest {
+
+
+    @Test
+    public void whenGivenInvokeMethod_shouldReturnObject() {
+        try {
+            Class<?> aClass = Class.forName("com.bridgelabz.moodAnalyzer.MoodAnalyzer");
+            Constructor moodAnalyzerConstructor=MoodAnalyserFactory.getConstructor(String.class);
+            Object moodObject=moodAnalyzerConstructor.newInstance("i am Happy");
+            Method methodObj=aClass.getDeclaredMethod("analyse");
+            Object result = methodObj.invoke(moodObject);
+            Assert.assertEquals("Happy",result.toString());
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @Test
     public void whenGivenConstructorWithNoParameter_shouldReturnObject() {
