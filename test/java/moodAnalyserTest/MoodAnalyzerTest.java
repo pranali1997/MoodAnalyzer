@@ -7,12 +7,27 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class MoodAnalyzerTest {
 
- @Test
+
+    @Test
+    public void whenGivenMethodNameImproper_shouldReturnException() throws InvocationTargetException, IllegalAccessException {
+        try {
+            Method method = MoodAnalyserReflector.getMethod("analysd");
+            String mood = (String) method.invoke(new MoodAnalyzer("i am happy"));
+            Assert.assertEquals("Happy", mood);
+        }catch (MoodAnalysisException ex){
+            ex.printStackTrace();
+        }
+    }
+
+
+
+    @Test
   public void whenGivenMethod_shouldInvokeReturnObject() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
       Method method = MoodAnalyserReflector.getMethod("i am happy");
       String mood = (String) method.invoke(new MoodAnalyzer("i am happy"));

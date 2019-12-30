@@ -58,10 +58,18 @@ public class MoodAnalyserReflector {
         return moodObject;
     }
 
-    public static Method getMethod(String message) throws NoSuchMethodException {
-        Constructor<?> constructor =getConstructor(String.class);
-        Object object = getObject(constructor,message);
-        Method analyze = object.getClass().getDeclaredMethod("analyse");
-        return analyze;
+    public static Method getMethod(String methodName)  {
+        try {
+            Constructor<?> constructor = getConstructor(String.class);
+            Object object = getObject(constructor, "sad");
+            Method analyze = object.getClass().getDeclaredMethod(methodName);
+            return analyze;
+        } catch (NoSuchMethodException e) {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD_FOUND,"Please enter the valid method name");
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
