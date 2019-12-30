@@ -1,6 +1,6 @@
 package moodAnalyserTest;
 
-import com.bridgelabz.moodAnalyzer.MoodAnalyserFactory;
+import com.bridgelabz.moodAnalyzer.MoodAnalyserReflector;
 import com.bridgelabz.moodAnalyzer.MoodAnalysisException;
 import com.bridgelabz.moodAnalyzer.MoodAnalyzer;
 import org.junit.Assert;
@@ -17,7 +17,7 @@ public class MoodAnalyzerTest {
     public void whenGivenInvokeMethod_shouldReturnObject() {
         try {
             Class<?> aClass = Class.forName("com.bridgelabz.moodAnalyzer.MoodAnalyzer");
-            Constructor moodAnalyzerConstructor=MoodAnalyserFactory.getConstructor(String.class);
+            Constructor moodAnalyzerConstructor= MoodAnalyserReflector.getConstructor(String.class);
             Object moodObject=moodAnalyzerConstructor.newInstance("i am Happy");
             Method methodObj=aClass.getDeclaredMethod("analyse");
             Object result = methodObj.invoke(moodObject);
@@ -38,17 +38,17 @@ public class MoodAnalyzerTest {
 
     @Test
     public void whenGivenConstructorWithNoParameter_shouldReturnObject() {
-        Constructor moodAnalyzerConstructor= MoodAnalyserFactory.getConstructor();
-        Object object= MoodAnalyserFactory.getObject(moodAnalyzerConstructor);
+        Constructor moodAnalyzerConstructor= MoodAnalyserReflector.getConstructor();
+        Object object= MoodAnalyserReflector.getObject(moodAnalyzerConstructor);
         MoodAnalyzer object1 = (MoodAnalyzer) object;
         Assert.assertEquals(true,object1.equals(new MoodAnalyzer()));
     }
 
     @Test
     public void whenGivenConstructorWithParameter_shouldReturnObject() {
-        Constructor moodAnalyzerConstructor = MoodAnalyserFactory.getConstructor(String.class);
+        Constructor moodAnalyzerConstructor = MoodAnalyserReflector.getConstructor(String.class);
 
-            Object object = MoodAnalyserFactory.getObject(moodAnalyzerConstructor, "i am Happy");
+            Object object = MoodAnalyserReflector.getObject(moodAnalyzerConstructor, "i am Happy");
             MoodAnalyzer objectAnalyzer1 = (MoodAnalyzer) object;
             Assert.assertEquals(true,objectAnalyzer1.equals(new MoodAnalyzer("i am Happy")));
 
@@ -92,7 +92,7 @@ public class MoodAnalyzerTest {
 
     @Test
     public void givenMoodAnalyserClassName_whenProper_shouldReturnObject() {
-        MoodAnalyzer moodAnalyzer = MoodAnalyserFactory.CreateMoodAnalyser("Please, enter a valid message");
+        MoodAnalyzer moodAnalyzer = MoodAnalyserReflector.CreateMoodAnalyser("Please, enter a valid message");
         String mood = moodAnalyzer.analyse();
         Assert.assertEquals("Happy",mood);
 
@@ -137,7 +137,7 @@ public class MoodAnalyzerTest {
     @Test
     public void givenMoodAnalyzerClass_whenProperMessage_shouldReturnTrue() {
         MoodAnalyzer moodAnalyzer = new MoodAnalyzer("i'm happy right now");
-        MoodAnalyzer moodAnalyzer1 = MoodAnalyserFactory.CreateMoodAnalyser("i'm happy right now");
+        MoodAnalyzer moodAnalyzer1 = MoodAnalyserReflector.CreateMoodAnalyser("i'm happy right now");
         Assert.assertEquals(true,moodAnalyzer1.equals(moodAnalyzer));
     }
 

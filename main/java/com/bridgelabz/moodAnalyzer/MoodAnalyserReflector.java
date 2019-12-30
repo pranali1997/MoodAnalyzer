@@ -2,9 +2,8 @@ package com.bridgelabz.moodAnalyzer;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.ForkJoinPool;
 
-public class MoodAnalyserFactory {
+public class MoodAnalyserReflector {
 
 
     public static MoodAnalyzer CreateMoodAnalyser(String message) {
