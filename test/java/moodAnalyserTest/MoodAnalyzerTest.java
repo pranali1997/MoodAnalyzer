@@ -12,7 +12,61 @@ import java.lang.reflect.InvocationTargetException;
 public class MoodAnalyzerTest {
 
     @Test
-    public void givenMoodAnalyserClass_whenProper_shouldReturnObject() {
+    public void whenGivenConstructorWithNoParameter_shouldReturnObject() {
+        Constructor moodAnalyzerConstructor= MoodAnalyserFactory.getConstructor();
+        Object object= MoodAnalyserFactory.getObject(moodAnalyzerConstructor);
+        MoodAnalyzer object1 = (MoodAnalyzer) object;
+        Assert.assertEquals(true,object1.equals(new MoodAnalyzer()));
+    }
+
+    @Test
+    public void whenGivenConstructorWithParameter_shouldReturnObject() {
+        Constructor moodAnalyzerConstructor = MoodAnalyserFactory.getConstructor(String.class);
+
+            Object object = MoodAnalyserFactory.getObject(moodAnalyzerConstructor, "i am Happy");
+            MoodAnalyzer objectAnalyzer1 = (MoodAnalyzer) object;
+            Assert.assertEquals(true,objectAnalyzer1.equals(new MoodAnalyzer("i am Happy")));
+
+    }
+
+    @Test
+    public void givenMoodAnalyserMethodName_whenNotProper_shouldReturnException() {
+        try {
+            Class.forName("com.bridgelabz.moodAnalyzer.MoodAnalyzer").getConstructor(Character.class);
+        }
+        catch (NoSuchMethodException e) {
+            try {
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD_FOUND, "Please enter the valid method name");
+            }
+            catch (MoodAnalysisException ex) {
+                ex.printStackTrace();
+            }
+        }
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenMoodAnalyserClass_whenNotProper_shouldReturnException() throws MoodAnalysisException {
+        try {
+            Class.forName("com.bridgelabz.moodAnalyzer.MoodAnalyzers").getConstructor(String.class);
+        }
+        catch (NoSuchMethodException e) {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD_FOUND,"Please, enter the valid method name");
+        }
+        catch (ClassNotFoundException e) {
+            try {
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS_FOUND, "Please, enter valid class name");
+            }
+            catch (MoodAnalysisException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+    public void givenMoodAnalyserClassName_whenProper_shouldReturnObject() {
         MoodAnalyzer moodAnalyzer = MoodAnalyserFactory.CreateMoodAnalyser("Please, enter a valid message");
         String mood = moodAnalyzer.analyse();
         Assert.assertEquals("Happy",mood);
@@ -25,28 +79,34 @@ public class MoodAnalyzerTest {
 
         try {
             constructor = Class.forName("com.bridgelabz.moodAnalyzer.MoodAnalyzer").getConstructor(String.class);
-        } catch (NoSuchMethodException e) {
+        }
+        catch (NoSuchMethodException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
         try {
-         Object myObj= constructor.newInstance("i'm happy right now");
-         MoodAnalyzer moodAnalyzer=(MoodAnalyzer) myObj;
-         try {
-
-             String mood = moodAnalyzer.analyse();
-             Assert.assertEquals("Happy", mood);
-         } catch (MoodAnalysisException e) {
-             e.printStackTrace();
-         }
-        } catch (InstantiationException e) {
+            Object myObj= constructor.newInstance("i'm happy right now");
+            MoodAnalyzer moodAnalyzer=(MoodAnalyzer) myObj;
+            try {
+                String mood = moodAnalyzer.analyse();
+                Assert.assertEquals("Happy", mood);
+            }
+            catch (MoodAnalysisException e) {
+                e.printStackTrace();
+            }
+        }
+        catch (InstantiationException e) {
             e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e) {
             e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace(); }
+        }
+        catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

@@ -4,7 +4,13 @@ import java.util.Objects;
 
 public class MoodAnalyzer {
     private String message;
+
+    public MoodAnalyzer() {
+
+    }
+
     public MoodAnalyzer(String message) {
+
         this.message=message;
     }
 
@@ -19,10 +25,6 @@ public class MoodAnalyzer {
     @Override
     public int hashCode() {
         return Objects.hash(message);
-    }
-
-    public MoodAnalyzer() {
-
     }
 
     public String analyse() throws MoodAnalysisException {
