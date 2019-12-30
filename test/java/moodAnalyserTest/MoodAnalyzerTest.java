@@ -12,9 +12,14 @@ import java.lang.reflect.Method;
 
 public class MoodAnalyzerTest {
 
-
+ @Test
+  public void whenGivenMethod_shouldInvokeReturnObject() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+      Method method = MoodAnalyserReflector.getMethod("i am happy");
+      String mood = (String) method.invoke(new MoodAnalyzer("i am happy"));
+      Assert.assertEquals("Happy",mood);
+  }
     @Test
-    public void whenGivenInvokeMethod_shouldReturnObject() {
+    public void whenGivenMethod_shouldInvokeAndReturnObject() {
         try {
             Class<?> aClass = Class.forName("com.bridgelabz.moodAnalyzer.MoodAnalyzer");
             Constructor moodAnalyzerConstructor= MoodAnalyserReflector.getConstructor(String.class);

@@ -2,6 +2,7 @@ package com.bridgelabz.moodAnalyzer;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class MoodAnalyserReflector {
 
@@ -11,6 +12,7 @@ public class MoodAnalyserReflector {
             Class<?> moodAnalyserClass = Class.forName("com.bridgelabz.moodAnalyzer.MoodAnalyzer");
             Constructor<?> moodConstructor = moodAnalyserClass.getConstructor(String.class);
             Object moodObj = moodConstructor.newInstance(message);
+
             return (MoodAnalyzer) moodObj;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -56,4 +58,10 @@ public class MoodAnalyserReflector {
         return moodObject;
     }
 
+    public static Method getMethod(String message) throws NoSuchMethodException {
+        Constructor<?> constructor =getConstructor(String.class);
+        Object object = getObject(constructor,message);
+        Method analyze = object.getClass().getDeclaredMethod("analyse");
+        return analyze;
+    }
 }
